@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <CheckBox
+        android:id="@+id/read_status"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_margin="@dimen/default_margin"
+        app:layout_constraintBottom_toTopOf="@id/header_guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_margin"
+        app:layout_constraintBottom_toTopOf="@id/header_guideline"
+        app:layout_constraintEnd_toStartOf="@id/posted_time"
+        app:layout_constraintStart_toEndOf="@id/read_status"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="TITLE" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/posted_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/default_margin"
+        app:layout_constraintBottom_toTopOf="@id/header_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="POSTED TIME" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/header_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="37dp" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="@dimen/default_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_guideline" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/half_margin"
+        android:ellipsize="end"
+        android:maxLines="4"
+        app:layout_constraintEnd_toStartOf="@id/view_post_button"
+        app:layout_constraintStart_toEndOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/header_guideline"
+        tools:text="@tools:sample/lorem/random" />
+
+    <ImageView
+        android:id="@+id/view_post_button"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+        app:layout_constraintBottom_toBottomOf="@id/text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/dismiss_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:drawableStart="@drawable/ic_baseline_highlight_off_24"
+        android:gravity="center"
+        android:text="@string/dismiss_post"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/comments_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image"
+        tools:text="%1$s comments" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

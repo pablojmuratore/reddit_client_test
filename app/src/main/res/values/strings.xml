@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Reddit Posts</string>
+    <string name="dismiss_post">Dismiss Post</string>
 </resources>
