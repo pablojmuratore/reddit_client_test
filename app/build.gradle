@@ -66,6 +66,10 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 
+    // okhttp
+    def okhttp_logging_interceptor_version = "4.7.2"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_logging_interceptor_version"
+
     // glide
     def glide_version = "4.11.0"
     implementation "com.github.bumptech.glide:glide:$glide_version"
