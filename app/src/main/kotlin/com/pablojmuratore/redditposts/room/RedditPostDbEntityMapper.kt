@@ -7,6 +7,7 @@ import java.util.*
 class RedditPostDbEntityMapper : IEntityMapper<RedditPostDbEntity, RedditPost> {
     override fun mapFromEntity(entity: RedditPostDbEntity): RedditPost {
         return RedditPost(
+            entity.id,
             entity.author,
             Date(entity.createdUtc),
             entity.thumbnail,
@@ -18,7 +19,7 @@ class RedditPostDbEntityMapper : IEntityMapper<RedditPostDbEntity, RedditPost> {
 
     override fun mapToEntity(domainModel: RedditPost): RedditPostDbEntity {
         return RedditPostDbEntity(
-            0,
+            domainModel.id,
             domainModel.author,
             domainModel.createdUtc.time,
             domainModel.thumbnail,

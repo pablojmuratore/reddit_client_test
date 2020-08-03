@@ -3,6 +3,7 @@ package com.pablojmuratore.redditposts.model
 import java.util.*
 
 data class RedditPost(
+    val id: String,
     val author: String,
     val createdUtc: Date,
     val thumbnail: String,

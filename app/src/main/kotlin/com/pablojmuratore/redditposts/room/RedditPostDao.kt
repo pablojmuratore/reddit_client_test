@@ -1,15 +1,18 @@
 package com.pablojmuratore.redditposts.room
 
+import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.pablojmuratore.redditposts.model.RedditPost
 
 @Dao
 interface RedditPostDao {
     @Query("select * from redditposts")
     suspend fun getAll(): List<RedditPostDbEntity>
+
+    @Query("select * from redditposts")
+    fun getAllPaged(): DataSource.Factory<Int, RedditPostDbEntity>
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun savePosts(posts: List<RedditPostDbEntity>)

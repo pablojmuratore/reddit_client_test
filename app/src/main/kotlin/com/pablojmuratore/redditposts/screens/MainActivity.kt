@@ -1,8 +1,8 @@
 package com.pablojmuratore.redditposts.screens
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.pablojmuratore.redditposts.R
 import com.pablojmuratore.redditposts.network.RedditPostNetworkEntityMapper
 import com.pablojmuratore.redditposts.repositories.LocalDataRepository
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             val database = AppDatabase.getInstance()
-            val remoteDataRepository= RemoteDataRepository(RedditPostNetworkEntityMapper())
+            val remoteDataRepository = RemoteDataRepository(RedditPostNetworkEntityMapper())
             val localDataRepository = LocalDataRepository(database, RedditPostDbEntityMapper())
             val postsRepository = PostsRepository(remoteDataRepository, localDataRepository)
 

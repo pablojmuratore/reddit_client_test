@@ -7,6 +7,7 @@ import java.util.*
 class RedditPostNetworkEntityMapper : IEntityMapper<RedditPostNetworkEntity, RedditPost> {
     override fun mapFromEntity(entity: RedditPostNetworkEntity): RedditPost {
         return RedditPost(
+            entity.data.id,
             entity.data.author,
             Date(entity.data.createdUtc),
             entity.data.thumbnail,
@@ -18,6 +19,7 @@ class RedditPostNetworkEntityMapper : IEntityMapper<RedditPostNetworkEntity, Red
     override fun mapToEntity(domainModel: RedditPost): RedditPostNetworkEntity {
         return RedditPostNetworkEntity(
             data = RedditPostDataNetworkEntity(
+                domainModel.id,
                 domainModel.author,
                 domainModel.createdUtc.time,
                 domainModel.thumbnail,

@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Reddit Posts</string>
     <string name="dismiss_post">Dismiss Post</string>
+
+    <string name="hours_ago">%1$s hours ago</string>
+    <string name="num_comments">%1$s mments</string>
+
 </resources>

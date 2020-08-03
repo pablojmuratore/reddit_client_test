@@ -9,6 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:itemCount="5"
-        tools:listitem="@layout/list_item_post" />
+        tools:listitem="@layout/list_item_reddit_post" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

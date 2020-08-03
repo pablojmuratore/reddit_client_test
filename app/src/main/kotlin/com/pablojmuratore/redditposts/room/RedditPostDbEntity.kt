@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "redditposts")
 data class RedditPostDbEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: Long,
+    val id: String,
 
     @ColumnInfo(name = "author")
     val author: String,

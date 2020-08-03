@@ -7,6 +7,7 @@ data class RedditPostNetworkEntity(
 )
 
 data class RedditPostDataNetworkEntity(
+    val id: String,
     val author: String,
     @Json(name = "created_utc") val createdUtc: Long,
     val thumbnail: String,
