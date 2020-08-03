@@ -10,6 +10,10 @@ class LocalDataRepository(private val database: AppDatabase, private val redditP
         return redditPostDbEntityMapper.mapFromEntitiesList(database.redditPostsDao().getAll())
     }
 
+    override suspend fun getPostById(redditPostId: String): RedditPost {
+        return redditPostDbEntityMapper.mapFromEntity(database.redditPostsDao().getPostById(redditPostId))
+    }
+
     override fun getAllPostsPaged(): DataSource.Factory<Int, RedditPost> {
         return database.redditPostsDao().getAllPaged().map { post -> redditPostDbEntityMapper.mapFromEntity(post) }
     }

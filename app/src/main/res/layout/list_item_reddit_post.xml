@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/reddit_post_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -10,25 +11,25 @@
         android:layout_width="8dp"
         android:layout_height="8dp"
         android:layout_margin="@dimen/default_margin"
+        android:src="@drawable/ic_baseline_lens_24"
+        android:tint="@color/unread_dot_color"
         app:layout_constraintBottom_toTopOf="@id/header_guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_baseline_lens_24"
-        android:tint="@color/unread_dot_color"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/author"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/half_margin"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxLines="1"
         app:layout_constraintBottom_toTopOf="@id/header_guideline"
         app:layout_constraintEnd_toStartOf="@id/posted_time"
         app:layout_constraintStart_toEndOf="@id/read_status"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="AUTHOR"
-        android:lines="1"
-        android:maxLines="1"
-        android:ellipsize="end"/>
+        tools:text="AUTHOR" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/posted_time"
@@ -54,7 +55,7 @@
         android:layout_margin="@dimen/default_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header_guideline"
-        tools:src="@tools:sample/backgrounds/scenic"/>
+        tools:src="@tools:sample/backgrounds/scenic" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title"
@@ -64,12 +65,12 @@
         android:layout_marginTop="@dimen/default_margin"
         android:layout_marginEnd="@dimen/half_margin"
         android:ellipsize="end"
+        android:gravity="center_vertical"
         android:maxLines="4"
         app:layout_constraintEnd_toStartOf="@id/view_post_button"
         app:layout_constraintStart_toEndOf="@id/image"
         app:layout_constraintTop_toBottomOf="@id/header_guideline"
-        tools:text="@tools:sample/lorem/random"
-        android:gravity="center_vertical"/>
+        tools:text="@tools:sample/lorem/random" />
 
     <ImageView
         android:id="@+id/view_post_button"

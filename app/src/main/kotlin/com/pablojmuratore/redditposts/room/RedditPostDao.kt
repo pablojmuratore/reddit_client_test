@@ -11,6 +11,9 @@ interface RedditPostDao {
     @Query("select * from redditposts")
     suspend fun getAll(): List<RedditPostDbEntity>
 
+    @Query("select * from redditposts where id=:redditPostId")
+    suspend fun getPostById(redditPostId: String): RedditPostDbEntity
+
     @Query("select * from redditposts")
     fun getAllPaged(): DataSource.Factory<Int, RedditPostDbEntity>
 

@@ -32,4 +32,9 @@ class PostsRepository(private val remoteDataRepository: IRemoteDataRepository, p
         }
     }
 
+    suspend fun getRedditPostById(redditPostId: String): RedditPost {
+        val localRedditPost = localDataRepository.getPostById(redditPostId)
+
+        return localRedditPost
+    }
 }

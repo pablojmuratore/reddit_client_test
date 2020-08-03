@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/post_detail_nav_graph"
+    app:startDestination="@id/postDetailFragment">
+
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="com.pablojmuratore.redditposts.screens.postdetail.PostDetailFragment"
+        android:label="PostDetailFragment">
+
+        <argument
+            android:name="redditPost"
+            app:argType=".model.RedditPost"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+
+        <action
+            android:id="@+id/action_postDetailFragment_self"
+            app:destination="@id/postDetailFragment"
+            app:launchSingleTop="false" />
+
+    </fragment>
+
+</navigation>

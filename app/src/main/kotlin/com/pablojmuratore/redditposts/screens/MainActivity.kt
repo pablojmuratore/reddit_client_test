@@ -1,7 +1,6 @@
 package com.pablojmuratore.redditposts.screens
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.pablojmuratore.redditposts.R
 import com.pablojmuratore.redditposts.network.RedditPostNetworkEntityMapper
@@ -25,10 +24,7 @@ class MainActivity : AppCompatActivity() {
             val localDataRepository = LocalDataRepository(database, RedditPostDbEntityMapper())
             val postsRepository = PostsRepository(remoteDataRepository, localDataRepository)
 
-            Log.d("---x", "getting posts")
             val posts = postsRepository.getTopPosts(true)
-
-            Log.d("---x", "posts retrieved: ${posts.size}")
         }
     }
 }
