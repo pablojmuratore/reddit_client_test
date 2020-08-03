@@ -2,12 +2,13 @@ package com.pablojmuratore.redditposts.network
 
 import com.pablojmuratore.redditposts.model.RedditPost
 import com.pablojmuratore.redditposts.util.IEntityMapper
+import java.util.*
 
-class RedditPostsNetworkEntityMapper : IEntityMapper<RedditPostNetworkEntity, RedditPost> {
+class RedditPostNetworkEntityMapper : IEntityMapper<RedditPostNetworkEntity, RedditPost> {
     override fun mapFromEntity(entity: RedditPostNetworkEntity): RedditPost {
         return RedditPost(
             entity.data.author,
-            entity.data.createdUtc,
+            Date(entity.data.createdUtc),
             entity.data.thumbnail,
             entity.data.title,
             entity.data.numComments
@@ -18,7 +19,7 @@ class RedditPostsNetworkEntityMapper : IEntityMapper<RedditPostNetworkEntity, Re
         return RedditPostNetworkEntity(
             data = RedditPostDataNetworkEntity(
                 domainModel.author,
-                domainModel.createdUtc,
+                domainModel.createdUtc.time,
                 domainModel.thumbnail,
                 domainModel.title,
                 domainModel.numComments

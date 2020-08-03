@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.pablojmuratore.redditposts.R
-import com.pablojmuratore.redditposts.network.RedditPostsNetworkEntityMapper
+import com.pablojmuratore.redditposts.network.RedditPostNetworkEntityMapper
+import com.pablojmuratore.redditposts.repositories.LocalDataRepository
 import com.pablojmuratore.redditposts.repositories.PostsRepository
 import com.pablojmuratore.redditposts.repositories.RemoteDataRepository
+import com.pablojmuratore.redditposts.room.AppDatabase
+import com.pablojmuratore.redditposts.room.RedditPostDbEntityMapper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,13 +20,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         CoroutineScope(Dispatchers.IO).launch {
-            val remoteDataRepository = RemoteDataRepository(RedditPostsNetworkEntityMapper())
-            val postsRepository = PostsRepository(remoteDataRepository)
+            val database = AppDatabase.getInstance()
+            val remoteDataRepository= RemoteDataRepository(RedditPostNetworkEntityMapper())
+            val localDataRepository = LocalDataRepository(database, RedditPostDbEntityMapper())
+            val postsRepository = PostsRepository(remoteDataRepository, localDataRepository)
 
-            val posts = postsRepository.getTopPosts()
+            Log.d("---x", "getting posts")
+            val posts = postsRepository.getTopPosts(true)
 
-            Log.d("---x", "posts: ${posts.size}")
+            Log.d("---x", "posts retrieved: ${posts.size}")
         }
     }
 }
-
