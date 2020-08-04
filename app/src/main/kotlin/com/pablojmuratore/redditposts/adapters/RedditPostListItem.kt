@@ -35,11 +35,12 @@ class RedditPostListItem {
                 holder.author.setTextColor(readColor)
                 holder.postedTime.text = buildPostedTime(holder.postedTime.context.getString(R.string.hours_ago), redditPost.createdUtc)
                 holder.postedTime.setTextColor(readColor)
-                if (redditPost.thumbnail != "self") {
+                if (!redditPost.isTextPost) {
                     holder.image.visibility = View.VISIBLE
 
                     GlideApp.with(holder.image.context)
                         .load(redditPost.thumbnail)
+                        .error(R.drawable.ic_baseline_broken_image_24)
                         .into(holder.image)
                 } else {
                     holder.image.visibility = View.GONE

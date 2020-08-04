@@ -11,6 +11,7 @@ data class RedditPost(
     val thumbnail: String,
     val title: String,
     val numComments: Long,
+    val isTextPost: Boolean,
     var read: Boolean = false
 ) : Parcelable {
     constructor(source: Parcel) : this(
@@ -20,6 +21,7 @@ data class RedditPost(
         source.readString() ?: "",
         source.readString() ?: "",
         source.readLong(),
+        1 == source.readInt(),
         1 == source.readInt()
     )
 
@@ -32,6 +34,7 @@ data class RedditPost(
         writeString(thumbnail)
         writeString(title)
         writeLong(numComments)
+        writeInt((if (isTextPost) 1 else 0))
         writeInt((if (read) 1 else 0))
     }
 

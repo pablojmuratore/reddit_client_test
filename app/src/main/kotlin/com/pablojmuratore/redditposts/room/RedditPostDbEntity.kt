@@ -25,6 +25,9 @@ data class RedditPostDbEntity(
     @ColumnInfo(name = "num_comments")
     val numComments: Long,
 
+    @ColumnInfo(name = "isTextPost")
+    val isTextPost: Boolean,
+
     @ColumnInfo(name = "read")
     var read: Boolean = false
 )

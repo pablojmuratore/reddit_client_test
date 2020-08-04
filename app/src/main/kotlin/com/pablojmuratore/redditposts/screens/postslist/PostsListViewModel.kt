@@ -18,12 +18,12 @@ import kotlinx.coroutines.launch
 
 class PostsListViewModel : ViewModel() {
     val postsList: LiveData<PagedList<RedditPost>>
+
     private var _currentPost = MutableLiveData<RedditPost?>()
+    val currentPost: LiveData<RedditPost?> get() = _currentPost
 
     private var _refreshingPosts = MutableLiveData<Boolean>()
     val refreshingPosts: LiveData<Boolean> get() = _refreshingPosts
-
-    val currentPost: LiveData<RedditPost?> get() = _currentPost
 
     private val database: AppDatabase by lazy { AppDatabase.getInstance() }
     private val remoteDataRepository: RemoteDataRepository by lazy { RemoteDataRepository(RedditPostNetworkEntityMapper()) }
@@ -36,13 +36,20 @@ class PostsListViewModel : ViewModel() {
         postsList = pagedListBuilder.build()
 
         _currentPost.value = null
-
         _refreshingPosts.value = false
+
+        viewModelScope.launch {
+            if (localDataRepository.getAllPosts().size == 0) {
+                postsRepository.getTopPosts(true)
+            }
+        }
     }
 
     fun loadDataFromNetwork() {
+        _refreshingPosts.value = true
+        _currentPost.value = null
+
         viewModelScope.launch {
-            _refreshingPosts.value = true
             postsRepository.getTopPosts(true)
             _refreshingPosts.value = false
         }
@@ -52,13 +59,20 @@ class PostsListViewModel : ViewModel() {
         _currentPost.value = redditPost
     }
 
-    fun deletePost(redditPost: RedditPost) {
+    fun dismissPost(redditPost: RedditPost) {
         viewModelScope.launch {
             localDataRepository.deletePost(redditPost.id)
 
             if (_currentPost.value != null && redditPost.id == _currentPost.value!!.id) {
                 _currentPost.value = null
             }
+        }
+    }
+
+    fun dismissAllPosts() {
+        viewModelScope.launch {
+            _currentPost.value = null
+            localDataRepository.clearPosts()
         }
     }
 

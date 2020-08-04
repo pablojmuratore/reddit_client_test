@@ -12,5 +12,6 @@ data class RedditPostDataNetworkEntity(
     @Json(name = "created_utc") val createdUtc: Long,
     val thumbnail: String,
     val title: String,
-    @Json(name = "num_comments") val numComments: Long
+    @Json(name = "num_comments") val numComments: Long,
+    @Json(name = "is_self") val isTextPost: Boolean
 )

@@ -1,6 +1,7 @@
 package com.pablojmuratore.redditposts.screens.postslist
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,12 +16,13 @@ import com.pablojmuratore.redditposts.R
 import com.pablojmuratore.redditposts.adapters.RedditPostsListAdapter
 import com.pablojmuratore.redditposts.databinding.FragmentPostsListBinding
 import com.pablojmuratore.redditposts.model.RedditPost
+import com.pablojmuratore.redditposts.screens.main.MainActivity
 import com.pablojmuratore.redditposts.screens.postdetail.PostDetailFragmentDirections
 
 class PostsListFragment : Fragment() {
     private lateinit var binding: FragmentPostsListBinding
     lateinit var postsListAdapter: RedditPostsListAdapter
-    private val viewModel: PostsListViewModel by lazy { ViewModelProvider(this).get(PostsListViewModel::class.java) }
+    private val viewModel: PostsListViewModel by lazy { ViewModelProvider(requireActivity()).get(PostsListViewModel::class.java) }
 
     private lateinit var postsEventsListener: RedditPostsListAdapter.IRedditPostEventsListener
 
@@ -34,7 +36,7 @@ class PostsListFragment : Fragment() {
 
         initListeners()
         initViews()
-        initViewModel()
+        initViewModels()
         initEvents()
     }
 
@@ -61,9 +63,20 @@ class PostsListFragment : Fragment() {
         }
     }
 
-    private fun initViewModel() {
+    private fun initViewModels() {
         viewModel.postsList.observe(viewLifecycleOwner, Observer {
             postsListAdapter.submitList(it)
+
+            if (it.size > 0) {
+                binding.emptyListMessage.visibility = View.GONE
+                binding.postsList.visibility = View.VISIBLE
+                binding.dismissAllButton.visibility = View.VISIBLE
+            }
+            else {
+                binding.emptyListMessage.visibility = if (viewModel.refreshingPosts.value != true) View.VISIBLE else View.GONE
+                binding.postsList.visibility = View.GONE
+                binding.dismissAllButton.visibility = View.GONE
+            }
         })
 
         viewModel.currentPost.observe(viewLifecycleOwner, Observer {
@@ -74,24 +87,33 @@ class PostsListFragment : Fragment() {
             if (!it) {
                 binding.postsListSwipeToRefresh.isRefreshing = false
                 binding.postsList.smoothScrollToPosition(0)
-                viewModel.showPost(null)
+//                viewModel.showPost(null)
+                binding.dismissAllButton.visibility = View.VISIBLE
+            }
+            else {
+                binding.dismissAllButton.visibility = View.GONE
             }
         })
-
     }
 
     private fun initEvents() {
         binding.postsListSwipeToRefresh.setOnRefreshListener {
             viewModel.loadDataFromNetwork()
         }
+
+        binding.dismissAllButton.setOnClickListener {
+            viewModel.dismissAllPosts()
+        }
     }
 
     private fun showRedditPost(redditPost: RedditPost) {
         viewModel.showPost(redditPost)
+
+        (requireActivity() as MainActivity).closeDrawer()
     }
 
     private fun dismissRedditPost(redditpost: RedditPost) {
-        viewModel.deletePost(redditpost)
+        viewModel.dismissPost(redditpost)
     }
 
 }

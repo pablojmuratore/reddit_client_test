@@ -12,7 +12,8 @@ class RedditPostNetworkEntityMapper : IEntityMapper<RedditPostNetworkEntity, Red
             Date(entity.data.createdUtc),
             entity.data.thumbnail,
             entity.data.title,
-            entity.data.numComments
+            entity.data.numComments,
+            entity.data.isTextPost
         )
     }
 
@@ -24,7 +25,8 @@ class RedditPostNetworkEntityMapper : IEntityMapper<RedditPostNetworkEntity, Red
                 domainModel.createdUtc.time,
                 domainModel.thumbnail,
                 domainModel.title,
-                domainModel.numComments
+                domainModel.numComments,
+                domainModel.isTextPost
             )
         )
     }

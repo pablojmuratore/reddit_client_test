@@ -14,7 +14,7 @@ import com.pablojmuratore.redditposts.util.GlideApp
 
 class PostDetailFragment : Fragment() {
     private lateinit var binding: FragmentPostDetailBinding
-    private val viewModel: PostDetailViewModel by lazy { ViewModelProvider(this).get(PostDetailViewModel::class.java) }
+    private val viewModel: PostDetailViewModel by lazy { ViewModelProvider(requireActivity()).get(PostDetailViewModel::class.java) }
     private val args: PostDetailFragmentArgs? by navArgs()
 
     private var redditPost: RedditPost? = null
@@ -34,22 +34,29 @@ class PostDetailFragment : Fragment() {
         if (redditPost != null) {
             viewModel.markPostRead(redditPost!!.id)
             viewModel.loadRedditPost(redditPost!!.id)
+        } else {
+            viewModel.clearRedditPost()
         }
     }
 
     private fun initViewModels() {
         viewModel.redditPost.observe(viewLifecycleOwner, Observer {
-            binding.author.text = it.author
-            if (it.thumbnail != "self") {
-                binding.image.visibility = View.VISIBLE
-                GlideApp.with(this)
-                    .load(it.thumbnail)
-                    .into(binding.image)
+            if (it != null) {
+                binding.author.text = it.author
+                if (!it.isTextPost) {
+                    binding.image.visibility = View.VISIBLE
+                    GlideApp.with(this)
+                        .load(it.thumbnail)
+                        .into(binding.image)
+                } else {
+                    binding.image.visibility = View.GONE
+                }
+                binding.title.text = it.title
+            } else {
+                binding.author.text = ""
+                binding.image.setImageDrawable(null)
+                binding.title.text = ""
             }
-            else {
-                binding.image.visibility = View.GONE
-            }
-            binding.title.text = it.title
         })
     }
 

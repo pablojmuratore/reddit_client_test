@@ -6,5 +6,4 @@
     <dimen name="text_size_smaller">12sp</dimen>
     <dimen name="text_size_normal">14sp</dimen>
     <dimen name="text_size_bigger">18sp</dimen>
-
 </resources>

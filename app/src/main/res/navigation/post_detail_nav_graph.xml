@@ -18,7 +18,7 @@
         <action
             android:id="@+id/action_postDetailFragment_self"
             app:destination="@id/postDetailFragment"
-            app:launchSingleTop="false" />
+            app:launchSingleTop="true" />
 
     </fragment>
 

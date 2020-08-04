@@ -41,12 +41,14 @@ class RedditPostsListAdapter(private val redditPostEventsListener: IRedditPostEv
     }
 
     private fun getPostById(redditPostId: String): RedditPost? {
-        for (pos in 0..itemCount) {
-            if ((getItem(pos) as RedditPost).id == redditPostId) {
-                return getItem(pos) as RedditPost
+        return if (currentList != null) {
+            try {
+                currentList!!.first { post -> (post as RedditPost).id == redditPostId }
+            } catch (e: Exception) {
+                null
             }
+        } else {
+            null
         }
-
-        return null
     }
 }

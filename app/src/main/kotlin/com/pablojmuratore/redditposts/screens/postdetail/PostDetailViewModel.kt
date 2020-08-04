@@ -1,5 +1,6 @@
 package com.pablojmuratore.redditposts.screens.postdetail
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,18 +15,26 @@ import com.pablojmuratore.redditposts.room.RedditPostDbEntityMapper
 import kotlinx.coroutines.launch
 
 class PostDetailViewModel : ViewModel() {
-    private var _redditPost = MutableLiveData<RedditPost>()
-    val redditPost: LiveData<RedditPost> get() = _redditPost
+    private var _redditPost = MutableLiveData<RedditPost?>()
+    val redditPost: LiveData<RedditPost?> get() = _redditPost
     private val database = AppDatabase.getInstance()
     private val remoteDataRepository = RemoteDataRepository(RedditPostNetworkEntityMapper())
     private val localDataRepository = LocalDataRepository(database, RedditPostDbEntityMapper())
     private val postsRepository = PostsRepository(remoteDataRepository, localDataRepository)
+
+    init {
+        _redditPost.value = null
+    }
 
     fun loadRedditPost(redditPostId: String) {
         viewModelScope.launch {
             val redditPost = postsRepository.getRedditPostById(redditPostId)
             _redditPost.value = redditPost
         }
+    }
+
+    fun clearRedditPost() {
+        _redditPost.value = null
     }
 
     fun markPostRead(redditPostId: String) {
