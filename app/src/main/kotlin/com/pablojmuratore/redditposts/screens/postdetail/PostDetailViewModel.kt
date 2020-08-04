@@ -21,7 +21,6 @@ class PostDetailViewModel : ViewModel() {
     private val localDataRepository = LocalDataRepository(database, RedditPostDbEntityMapper())
     private val postsRepository = PostsRepository(remoteDataRepository, localDataRepository)
 
-
     fun loadRedditPost(redditPostId: String) {
         viewModelScope.launch {
             val redditPost = postsRepository.getRedditPostById(redditPostId)
@@ -29,4 +28,9 @@ class PostDetailViewModel : ViewModel() {
         }
     }
 
+    fun markPostRead(redditPostId: String) {
+        viewModelScope.launch {
+            localDataRepository.markPostRead(redditPostId)
+        }
+    }
 }

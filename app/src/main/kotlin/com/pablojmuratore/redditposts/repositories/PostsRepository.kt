@@ -10,9 +10,10 @@ class PostsRepository(private val remoteDataRepository: IRemoteDataRepository, p
 
     suspend fun getTopPosts(skipCache: Boolean = false): List<RedditPost> {
         return if (skipCache) {
+            val remotePosts = remoteDataRepository.getTopPosts()
+
             localDataRepository.clearPosts()
 
-            val remotePosts = remoteDataRepository.getTopPosts()
             localDataRepository.savePosts(remotePosts)
 
             localDataRepository.getAllPosts()

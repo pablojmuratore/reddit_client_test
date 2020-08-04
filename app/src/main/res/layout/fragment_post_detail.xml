@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/author"
@@ -11,7 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="AUTHOR" />
+        tools:text="AUTHOR"
+        android:textSize="@dimen/text_size_bigger"
+        android:textColor="@color/black"/>
 
     <ImageView
         android:id="@+id/image"
@@ -29,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
         app:layout_constraintTop_toBottomOf="@id/image"
-        tools:text="TITLE" />
+        tools:text="TITLE"
+        android:textColor="@color/black"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

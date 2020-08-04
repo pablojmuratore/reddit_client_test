@@ -1,7 +1,6 @@
 package com.pablojmuratore.redditposts.screens.postdetail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +32,7 @@ class PostDetailFragment : Fragment() {
         initViewModels()
 
         if (redditPost != null) {
+            viewModel.markPostRead(redditPost!!.id)
             viewModel.loadRedditPost(redditPost!!.id)
         }
     }
@@ -40,12 +40,17 @@ class PostDetailFragment : Fragment() {
     private fun initViewModels() {
         viewModel.redditPost.observe(viewLifecycleOwner, Observer {
             binding.author.text = it.author
-            GlideApp.with(this)
-                .load(it.thumbnail)
-                .into(binding.image)
+            if (it.thumbnail != "self") {
+                binding.image.visibility = View.VISIBLE
+                GlideApp.with(this)
+                    .load(it.thumbnail)
+                    .into(binding.image)
+            }
+            else {
+                binding.image.visibility = View.GONE
+            }
             binding.title.text = it.title
         })
-
     }
 
 }

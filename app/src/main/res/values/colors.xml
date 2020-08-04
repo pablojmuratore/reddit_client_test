@@ -4,5 +4,21 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
 
+    <color name="primary_text_default_material_dark">#ffff0000</color>
+
+
+
+    <color name="orange">#ffc76c1f</color>
+    <color name="orange_light">#ffbd8550</color>
+    <color name="black">#ff000000</color>
+    <color name="white">#ffffffff</color>
+    <color name="grey">#ff7b7b7b</color>
+
+    <color name="text">#ffffffff</color>
+    <color name="text_read">@color/grey</color>
+
+    <!-- posts list -->
     <color name="unread_dot_color">#ff066ffd</color>
+    <color name="posts_list_background">@color/black</color>
+
 </resources>

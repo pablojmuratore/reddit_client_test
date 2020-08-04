@@ -21,6 +21,7 @@ class RedditPostsListAdapter(private val redditPostEventsListener: IRedditPostEv
 
     interface IRedditPostEventsListener {
         fun onRedditPostClicked(redditPost: RedditPost)
+        fun onRedditPostDismissed(redditPost: RedditPost)
     }
 
     override fun onRedditPostListItemClicked(redditPostId: String) {
@@ -28,6 +29,14 @@ class RedditPostsListAdapter(private val redditPostEventsListener: IRedditPostEv
 
         if (post != null) {
             redditPostEventsListener?.onRedditPostClicked(post)
+        }
+    }
+
+    override fun onRedditPostDismissClicked(redditPostId: String) {
+        val post = getPostById(redditPostId)
+
+        if (post != null) {
+            redditPostEventsListener?.onRedditPostDismissed(post)
         }
     }
 

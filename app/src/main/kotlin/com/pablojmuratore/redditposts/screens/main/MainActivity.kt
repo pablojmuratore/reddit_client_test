@@ -1,4 +1,4 @@
-package com.pablojmuratore.redditposts.screens
+package com.pablojmuratore.redditposts.screens.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

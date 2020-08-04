@@ -18,8 +18,16 @@ class LocalDataRepository(private val database: AppDatabase, private val redditP
         return database.redditPostsDao().getAllPaged().map { post -> redditPostDbEntityMapper.mapFromEntity(post) }
     }
 
+    override suspend fun markPostRead(redditPostId: String) {
+        database.redditPostsDao().markPostRead(redditPostId)
+    }
+
     override suspend fun savePosts(posts: List<RedditPost>) {
         database.redditPostsDao().savePosts(redditPostDbEntityMapper.mapToEntitiesList(posts))
+    }
+
+    override suspend fun deletePost(redditPostId: String) {
+        database.redditPostsDao().deletePost(redditPostId)
     }
 
     override suspend fun clearPosts() {
