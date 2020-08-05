@@ -15,4 +15,12 @@
 
     <string name="image_download_start_message">Your image will download soon</string>
 
+    <string name="accept">Accept</string>
+    <string name="deny">Deny</string>
+
+    <!-- permissions -->
+    <string name="permission_required">Permission required</string>
+    <string name="need_permission_to_download_images">Permission to download images is needed</string>
+    <string name="permission_required_save_photos">Permission required to save photos from the Web.</string>
+
 </resources>

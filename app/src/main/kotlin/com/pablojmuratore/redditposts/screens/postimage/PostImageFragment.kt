@@ -116,15 +116,15 @@ class PostImageFragment : Fragment() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 AlertDialog.Builder(requireContext())
-                    .setTitle("Permission required")
-                    .setMessage("Permission required to save photos from the Web.")
-                    .setPositiveButton("Accept") { dialog, id ->
-                        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE)
+                    .setTitle(getString(R.string.permission_required))
+                    .setMessage(getString(R.string.permission_required_save_photos))
+                    .setPositiveButton(R.string.accept) { dialog, id ->
+                        requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE)
                     }
-                    .setNegativeButton("Deny") { dialog, id -> dialog.cancel() }
+                    .setNegativeButton(R.string.deny) { dialog, id -> dialog.cancel() }
                     .show()
             } else {
-                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE)
+                requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE)
             }
         } else {
             downloadImage(imageUrl)
@@ -137,7 +137,7 @@ class PostImageFragment : Fragment() {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     downloadImage(imageUrl)
                 } else {
-                    // pjm no se puede bajar la imagen, mostrar algo
+                    Snackbar.make(binding.root, R.string.need_permission_to_download_images, Snackbar.LENGTH_SHORT).show()
                 }
 
                 return
