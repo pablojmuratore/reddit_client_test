@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.pablojmuratore.redditposts.CustomListAnimator
 import com.pablojmuratore.redditposts.R
 import com.pablojmuratore.redditposts.adapters.RedditPostsListAdapter
@@ -25,6 +26,8 @@ class PostsListFragment : Fragment() {
     private val viewModel: PostsListViewModel by lazy { ViewModelProvider(requireActivity()).get(PostsListViewModel::class.java) }
 
     private lateinit var postsEventsListener: RedditPostsListAdapter.IRedditPostEventsListener
+
+    private var currentPost: RedditPost? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentPostsListBinding.inflate(inflater)
@@ -75,28 +78,29 @@ class PostsListFragment : Fragment() {
             }
         })
 
-        viewModel.currentPost.observe(viewLifecycleOwner, Observer {
-            val arguments = Bundle()
-            arguments.putParcelable("redditPost", it)
-
-            Navigation.findNavController(requireActivity(), R.id.post_detail_nav_host_fragment).navigate(R.id.postDetailFragment, arguments)
-        })
-
         viewModel.refreshingPosts.observe(viewLifecycleOwner, Observer {
             if (!it) {
                 binding.postsListSwipeToRefresh.isRefreshing = false
                 binding.postsList.smoothScrollToPosition(0)
-//                viewModel.showPost(null)
                 binding.dismissAllButton.visibility = View.VISIBLE
             } else {
                 binding.dismissAllButton.visibility = View.GONE
             }
         })
+
+        viewModel.message.observe(viewLifecycleOwner, Observer {
+            if (it.isNotEmpty()) {
+                viewModel.clearMessage()
+                Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
+            }
+        })
+
     }
 
     private fun initEvents() {
         binding.postsListSwipeToRefresh.setOnRefreshListener {
             viewModel.loadDataFromNetwork()
+            showRedditPost(null)
         }
 
         binding.dismissAllButton.setOnClickListener {
@@ -104,17 +108,29 @@ class PostsListFragment : Fragment() {
             binding.postsList.startAnimation(animation).also {
                 viewModel.dismissAllPosts()
             }
+
+            showRedditPost(null)
         }
     }
 
-    private fun showRedditPost(redditPost: RedditPost) {
-        viewModel.showPost(redditPost)
+    private fun showRedditPost(redditPost: RedditPost?) {
+        currentPost = redditPost
 
-        (requireActivity() as MainActivity).closeDrawer()
+        val arguments = Bundle()
+        arguments.putParcelable("redditPost", redditPost)
+        Navigation.findNavController(requireActivity(), R.id.post_detail_nav_host_fragment).navigate(R.id.postDetailFragment, arguments)
+
+        if (redditPost != null) {
+            (requireActivity() as MainActivity).closeDrawer()
+        }
     }
 
     private fun dismissRedditPost(redditpost: RedditPost) {
         viewModel.dismissPost(redditpost)
+
+        if (currentPost != null && currentPost!!.id == redditpost.id) {
+            showRedditPost(null)
+        }
     }
 
 }

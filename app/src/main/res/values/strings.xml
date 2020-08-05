@@ -9,4 +9,10 @@
 
     <string name="image_downloaded">Image downloaded</string>
 
+    <string name="no_network_message">No network available</string>
+
+    <string name="error_loading_image">Error loading image</string>
+
+    <string name="image_download_start_message">Your image will download soon</string>
+
 </resources>

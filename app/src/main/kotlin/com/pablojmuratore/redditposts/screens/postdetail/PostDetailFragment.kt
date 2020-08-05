@@ -9,15 +9,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.pablojmuratore.redditposts.R
 import com.pablojmuratore.redditposts.databinding.FragmentPostDetailBinding
 import com.pablojmuratore.redditposts.model.RedditPost
 import com.pablojmuratore.redditposts.util.GlideApp
+import com.pablojmuratore.redditposts.util.NetworkHelper
 
 class PostDetailFragment : Fragment() {
     private lateinit var binding: FragmentPostDetailBinding
     private val viewModel: PostDetailViewModel by lazy { ViewModelProvider(requireActivity()).get(PostDetailViewModel::class.java) }
     private val args: PostDetailFragmentArgs? by navArgs()
+    private val networkHelper = NetworkHelper()
 
     private var redditPost: RedditPost? = null
 
@@ -74,10 +77,14 @@ class PostDetailFragment : Fragment() {
 
     private fun initEvents() {
         binding.image.setOnClickListener {
-            val post = viewModel.redditPost.value
+            if (networkHelper.isNetworkAvailable()) {
+                val post = viewModel.redditPost.value
 
-            if (post != null) {
-                showImageFragment(post!!.imageUrl)
+                if (post != null) {
+                    showImageFragment(post.imageUrl)
+                }
+            } else {
+                Snackbar.make(binding.root, R.string.no_network_message, Snackbar.LENGTH_SHORT).show()
             }
         }
     }

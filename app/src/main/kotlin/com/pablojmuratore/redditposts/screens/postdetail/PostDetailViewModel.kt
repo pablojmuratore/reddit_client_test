@@ -27,9 +27,11 @@ class PostDetailViewModel : ViewModel() {
     }
 
     fun loadRedditPost(redditPostId: String) {
-        viewModelScope.launch {
-            val redditPost = postsRepository.getRedditPostById(redditPostId)
-            _redditPost.value = redditPost
+        if (_redditPost.value == null || redditPostId != _redditPost.value!!.id) {
+            viewModelScope.launch {
+                val redditPost = postsRepository.getRedditPostById(redditPostId)
+                _redditPost.value = redditPost
+            }
         }
     }
 
