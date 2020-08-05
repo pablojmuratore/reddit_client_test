@@ -24,6 +24,10 @@ class RedditPostListItem {
 
         fun bindViewHolder(holder: RedditPostViewHolder, redditPost: RedditPost?, listItemEventsListener: IRedditPostListItemEventsListener) {
             if (redditPost != null) {
+                holder.container.tag = redditPost.id
+
+                holder.dismissing = false
+
                 val readColor = if (!redditPost.read) {
                     ContextCompat.getColor(holder.container.context, R.color.text)
                 } else {
@@ -50,11 +54,13 @@ class RedditPostListItem {
                 holder.numComments.text = String.format(holder.numComments.context.getString(R.string.num_comments), redditPost.numComments)
 
                 holder.container.setOnClickListener {
-                    listItemEventsListener.onRedditPostListItemClicked(redditPost.id)
+                    listItemEventsListener.onRedditPostListItemClicked(it.tag.toString())
                 }
 
                 holder.dismissButton.setOnClickListener {
                     holder.dismissButton.setOnClickListener(null)
+
+                    holder.dismissing = true
 
                     listItemEventsListener.onRedditPostDismissClicked(redditPost.id)
                 }
@@ -70,7 +76,6 @@ class RedditPostListItem {
         }
     }
 
-
     class RedditPostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var container = view.findViewById<ConstraintLayout>(R.id.reddit_post_container)
         var readStatus = view.findViewById<ImageView>(R.id.read_status)
@@ -81,6 +86,7 @@ class RedditPostListItem {
         var viewPostButton = view.findViewById<ImageView>(R.id.view_post_button)
         var dismissButton = view.findViewById<MaterialTextView>(R.id.dismiss_button)
         var numComments = view.findViewById<MaterialTextView>(R.id.num_comments)
+        var dismissing: Boolean = false
     }
 
     interface IRedditPostListItemEventsListener {

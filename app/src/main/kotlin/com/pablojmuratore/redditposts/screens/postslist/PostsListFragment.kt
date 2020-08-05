@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.pablojmuratore.redditposts.CustomListAnimator
 import com.pablojmuratore.redditposts.R
 import com.pablojmuratore.redditposts.adapters.RedditPostsListAdapter
 import com.pablojmuratore.redditposts.databinding.FragmentPostsListBinding
@@ -58,6 +60,7 @@ class PostsListFragment : Fragment() {
             val dividerDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
             dividerDecoration.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.list_item_divider)!!)
             it.addItemDecoration(dividerDecoration)
+            it.itemAnimator = CustomListAnimator()
         }
     }
 
@@ -66,12 +69,8 @@ class PostsListFragment : Fragment() {
             postsListAdapter.submitList(it)
 
             if (it.size > 0) {
-                binding.emptyListMessage.visibility = View.GONE
-                binding.postsList.visibility = View.VISIBLE
                 binding.dismissAllButton.visibility = View.VISIBLE
             } else {
-                binding.emptyListMessage.visibility = if (viewModel.refreshingPosts.value != true) View.VISIBLE else View.GONE
-                binding.postsList.visibility = View.GONE
                 binding.dismissAllButton.visibility = View.GONE
             }
         })
@@ -101,7 +100,10 @@ class PostsListFragment : Fragment() {
         }
 
         binding.dismissAllButton.setOnClickListener {
-            viewModel.dismissAllPosts()
+            val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.list_all_items_remove_animation)
+            binding.postsList.startAnimation(animation).also {
+                viewModel.dismissAllPosts()
+            }
         }
     }
 
