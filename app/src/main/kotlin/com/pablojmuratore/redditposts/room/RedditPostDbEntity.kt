@@ -29,5 +29,9 @@ data class RedditPostDbEntity(
     val isTextPost: Boolean,
 
     @ColumnInfo(name = "read")
-    var read: Boolean = false
+    var read: Boolean = false,
+
+    @ColumnInfo(name = "image_url")
+    var imageUrl: String
+
 )

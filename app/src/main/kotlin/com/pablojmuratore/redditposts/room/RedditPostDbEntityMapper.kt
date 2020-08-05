@@ -14,7 +14,8 @@ class RedditPostDbEntityMapper : IEntityMapper<RedditPostDbEntity, RedditPost> {
             entity.title,
             entity.numComments,
             entity.isTextPost,
-            entity.read
+            entity.read,
+            entity.imageUrl
         )
     }
 
@@ -27,7 +28,8 @@ class RedditPostDbEntityMapper : IEntityMapper<RedditPostDbEntity, RedditPost> {
             domainModel.title,
             domainModel.numComments,
             domainModel.isTextPost,
-            domainModel.read
+            domainModel.read,
+            domainModel.imageUrl
         )
     }
 

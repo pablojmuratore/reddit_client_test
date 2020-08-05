@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import com.pablojmuratore.redditposts.R
 import com.pablojmuratore.redditposts.databinding.FragmentPostDetailBinding
 import com.pablojmuratore.redditposts.model.RedditPost
 import com.pablojmuratore.redditposts.util.GlideApp
@@ -37,27 +39,46 @@ class PostDetailFragment : Fragment() {
         } else {
             viewModel.clearRedditPost()
         }
+
+        initEvents()
     }
 
     private fun initViewModels() {
         viewModel.redditPost.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                binding.author.text = it.author
-                if (!it.isTextPost) {
-                    binding.image.visibility = View.VISIBLE
-                    GlideApp.with(this)
-                        .load(it.thumbnail)
-                        .into(binding.image)
-                } else {
-                    binding.image.visibility = View.GONE
-                }
-                binding.title.text = it.title
-            } else {
-                binding.author.text = ""
-                binding.image.setImageDrawable(null)
-                binding.title.text = ""
-            }
+            showPostInfo(it)
         })
     }
 
+    private fun showPostInfo(redditPost: RedditPost?) {
+        if (redditPost != null) {
+            binding.author.text = redditPost.author
+            if (!redditPost.isTextPost) {
+                binding.image.visibility = View.VISIBLE
+                GlideApp.with(this)
+                    .load(redditPost.thumbnail)
+                    .into(binding.image)
+            } else {
+                binding.image.visibility = View.GONE
+            }
+            binding.title.text = redditPost.title
+        } else {
+            binding.author.text = ""
+            binding.image.setImageDrawable(null)
+            binding.title.text = ""
+        }
+    }
+
+    private fun showImageFragment(imageUrl: String) {
+        Navigation.findNavController(requireActivity(), R.id.post_detail_nav_host_fragment).navigate(PostDetailFragmentDirections.actionPostDetailFragmentToPostImageFragment(imageUrl))
+    }
+
+    private fun initEvents() {
+        binding.image.setOnClickListener {
+            val post = viewModel.redditPost.value
+
+            if (post != null) {
+                showImageFragment(post!!.imageUrl)
+            }
+        }
+    }
 }

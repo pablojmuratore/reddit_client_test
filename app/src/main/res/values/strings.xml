@@ -6,5 +6,8 @@
     <string name="num_comments">%1$s comments</string>
     <string name="dismiss_all">Dismiss All</string>
     <string name="list_empty_message">No posts items, pull to refresh list</string>
+    <string name="save_image">Save Image</string>
+
+    <string name="image_downloaded">Image downloaded</string>
 
 </resources>

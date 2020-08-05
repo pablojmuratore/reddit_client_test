@@ -9,27 +9,34 @@
     app:elevation="0dp"
     tools:context=".screens.main.MainActivity">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/post_detail_nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="300dp"
-        app:navGraph="@navigation/post_detail_nav_graph" />
+        android:orientation="horizontal">
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="300dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start|left">
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/posts_list"
-            android:name="com.pablojmuratore.redditposts.screens.postslist.PostsListFragment"
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
             android:layout_width="300dp"
             android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_gravity="start|left">
 
-    </com.google.android.material.navigation.NavigationView>
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/posts_list"
+                android:name="com.pablojmuratore.redditposts.screens.postslist.PostsListFragment"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </com.google.android.material.navigation.NavigationView>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/post_detail_nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            app:navGraph="@navigation/post_detail_nav_graph" />
+
+    </LinearLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>

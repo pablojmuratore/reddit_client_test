@@ -1,7 +1,6 @@
 package com.pablojmuratore.redditposts.screens.postslist
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,6 @@ import com.pablojmuratore.redditposts.adapters.RedditPostsListAdapter
 import com.pablojmuratore.redditposts.databinding.FragmentPostsListBinding
 import com.pablojmuratore.redditposts.model.RedditPost
 import com.pablojmuratore.redditposts.screens.main.MainActivity
-import com.pablojmuratore.redditposts.screens.postdetail.PostDetailFragmentDirections
 
 class PostsListFragment : Fragment() {
     private lateinit var binding: FragmentPostsListBinding
@@ -71,8 +69,7 @@ class PostsListFragment : Fragment() {
                 binding.emptyListMessage.visibility = View.GONE
                 binding.postsList.visibility = View.VISIBLE
                 binding.dismissAllButton.visibility = View.VISIBLE
-            }
-            else {
+            } else {
                 binding.emptyListMessage.visibility = if (viewModel.refreshingPosts.value != true) View.VISIBLE else View.GONE
                 binding.postsList.visibility = View.GONE
                 binding.dismissAllButton.visibility = View.GONE
@@ -80,7 +77,10 @@ class PostsListFragment : Fragment() {
         })
 
         viewModel.currentPost.observe(viewLifecycleOwner, Observer {
-            Navigation.findNavController(requireActivity(), R.id.post_detail_nav_host_fragment).navigate(PostDetailFragmentDirections.actionPostDetailFragmentSelf(it))
+            val arguments = Bundle()
+            arguments.putParcelable("redditPost", it)
+
+            Navigation.findNavController(requireActivity(), R.id.post_detail_nav_host_fragment).navigate(R.id.postDetailFragment, arguments)
         })
 
         viewModel.refreshingPosts.observe(viewLifecycleOwner, Observer {
@@ -89,8 +89,7 @@ class PostsListFragment : Fragment() {
                 binding.postsList.smoothScrollToPosition(0)
 //                viewModel.showPost(null)
                 binding.dismissAllButton.visibility = View.VISIBLE
-            }
-            else {
+            } else {
                 binding.dismissAllButton.visibility = View.GONE
             }
         })

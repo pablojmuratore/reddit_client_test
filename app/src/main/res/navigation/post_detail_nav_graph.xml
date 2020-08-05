@@ -1,24 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/post_detail_nav_graph"
     app:startDestination="@id/postDetailFragment">
 
     <fragment
         android:id="@+id/postDetailFragment"
         android:name="com.pablojmuratore.redditposts.screens.postdetail.PostDetailFragment"
-        android:label="PostDetailFragment">
+        android:label="PostDetailFragment"
+        tools:layout="@layout/fragment_post_detail">
 
         <argument
             android:name="redditPost"
+            android:defaultValue="@null"
             app:argType=".model.RedditPost"
-            app:nullable="true"
-            android:defaultValue="@null"/>
+            app:nullable="true" />
 
         <action
             android:id="@+id/action_postDetailFragment_self"
             app:destination="@id/postDetailFragment"
             app:launchSingleTop="true" />
+
+        <action
+            android:id="@+id/action_postDetailFragment_to_postImageFragment"
+            app:destination="@id/postImageFragment"
+            app:popUpTo="@id/postDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/postImageFragment"
+        android:name="com.pablojmuratore.redditposts.screens.postimage.PostImageFragment"
+        android:label="PostImageFragment"
+        tools:layout="@layout/fragment_post_image">
+
+        <argument
+            android:name="imageUrl"
+            app:nullable="false" />
 
     </fragment>
 

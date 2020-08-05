@@ -13,7 +13,9 @@ class RedditPostNetworkEntityMapper : IEntityMapper<RedditPostNetworkEntity, Red
             entity.data.thumbnail,
             entity.data.title,
             entity.data.numComments,
-            entity.data.isTextPost
+            entity.data.isTextPost,
+            false,
+            entity.data.imageUrl
         )
     }
 
@@ -26,7 +28,8 @@ class RedditPostNetworkEntityMapper : IEntityMapper<RedditPostNetworkEntity, Red
                 domainModel.thumbnail,
                 domainModel.title,
                 domainModel.numComments,
-                domainModel.isTextPost
+                domainModel.isTextPost,
+                domainModel.imageUrl
             )
         )
     }

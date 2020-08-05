@@ -12,7 +12,8 @@ data class RedditPost(
     val title: String,
     val numComments: Long,
     val isTextPost: Boolean,
-    var read: Boolean = false
+    var read: Boolean = false,
+    val imageUrl: String
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString() ?: "",
@@ -22,7 +23,8 @@ data class RedditPost(
         source.readString() ?: "",
         source.readLong(),
         1 == source.readInt(),
-        1 == source.readInt()
+        1 == source.readInt(),
+        source.readString() ?: ""
     )
 
     override fun describeContents() = 0
@@ -36,6 +38,7 @@ data class RedditPost(
         writeLong(numComments)
         writeInt((if (isTextPost) 1 else 0))
         writeInt((if (read) 1 else 0))
+        writeString(imageUrl)
     }
 
     companion object {
