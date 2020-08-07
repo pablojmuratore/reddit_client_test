@@ -2,8 +2,11 @@ package com.pablojmuratore.redditposts.repositories
 
 import androidx.paging.DataSource
 import com.pablojmuratore.redditposts.model.RedditPost
+import javax.inject.Inject
 
-class PostsRepository(private val remoteDataRepository: IRemoteDataRepository, private val localDataRepository: ILocalDataRepository) {
+class PostsRepository
+@Inject
+constructor(private val remoteDataRepository: IRemoteDataRepository, private val localDataRepository: ILocalDataRepository) {
     fun getDataSourceFactoryForPosts(): DataSource.Factory<Int, RedditPost> {
         return localDataRepository.getAllPostsPaged()
     }

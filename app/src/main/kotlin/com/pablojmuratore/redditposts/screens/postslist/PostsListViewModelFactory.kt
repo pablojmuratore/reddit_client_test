@@ -7,6 +7,7 @@ import com.pablojmuratore.redditposts.repositories.PostsRepository
 import com.pablojmuratore.redditposts.repositories.RemoteDataRepository
 import com.pablojmuratore.redditposts.room.AppDatabase
 import com.pablojmuratore.redditposts.util.NetworkHelper
+import dagger.hilt.android.AndroidEntryPoint
 
 class PostsListViewModelFactory : ViewModelProvider.Factory {
     private val database: AppDatabase

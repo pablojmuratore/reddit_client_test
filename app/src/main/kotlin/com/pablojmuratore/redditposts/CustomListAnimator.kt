@@ -8,7 +8,7 @@ import com.pablojmuratore.redditposts.adapters.RedditPostListItem
 class CustomListAnimator : DefaultItemAnimator() {
     override fun animateRemove(holder: RecyclerView.ViewHolder?): Boolean {
         if (holder is RedditPostListItem.RedditPostViewHolder && holder.dismissing) {
-            holder?.let {
+            holder.let {
                 val animation = AnimationUtils.loadAnimation(it.itemView.context, R.anim.list_item_remove_animation)
                 it.itemView?.animation = animation.also {
                     dispatchAnimationsFinished()

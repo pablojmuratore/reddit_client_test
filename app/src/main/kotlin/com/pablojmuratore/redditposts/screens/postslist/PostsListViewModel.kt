@@ -15,8 +15,10 @@ import com.pablojmuratore.redditposts.repositories.RemoteDataRepository
 import com.pablojmuratore.redditposts.room.AppDatabase
 import com.pablojmuratore.redditposts.util.NetworkHelper
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PostsListViewModel(
+class PostsListViewModel
+@Inject constructor(
     private val database: AppDatabase,
     private val remoteDataRepository: RemoteDataRepository,
     private val localDataRepository: LocalDataRepository,

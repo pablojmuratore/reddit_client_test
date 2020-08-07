@@ -3,8 +3,12 @@ package com.pablojmuratore.redditposts.network
 import com.pablojmuratore.redditposts.model.RedditPost
 import com.pablojmuratore.redditposts.util.IEntityMapper
 import java.util.*
+import javax.inject.Inject
 
 class RedditPostNetworkEntityMapper : IEntityMapper<RedditPostNetworkEntity, RedditPost> {
+    @Inject
+    constructor()
+
     override fun mapFromEntity(entity: RedditPostNetworkEntity): RedditPost {
         return RedditPost(
             entity.data.id,

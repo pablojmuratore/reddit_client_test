@@ -4,8 +4,11 @@ import androidx.paging.DataSource
 import com.pablojmuratore.redditposts.model.RedditPost
 import com.pablojmuratore.redditposts.room.AppDatabase
 import com.pablojmuratore.redditposts.room.RedditPostDbEntityMapper
+import javax.inject.Inject
 
-class LocalDataRepository(private val database: AppDatabase, private val redditPostDbEntityMapper: RedditPostDbEntityMapper) : ILocalDataRepository {
+class LocalDataRepository
+@Inject
+constructor(private val database: AppDatabase, private val redditPostDbEntityMapper: RedditPostDbEntityMapper) : ILocalDataRepository {
     override suspend fun getAllPosts(): List<RedditPost> {
         return redditPostDbEntityMapper.mapFromEntitiesList(database.redditPostsDao().getAll())
     }

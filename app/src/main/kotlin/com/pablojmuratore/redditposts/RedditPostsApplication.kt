@@ -1,7 +1,9 @@
 package com.pablojmuratore.redditposts
 
 import androidx.multidex.MultiDexApplication
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class RedditPostsApplication : MultiDexApplication() {
     companion object {
         private lateinit var redditPostsApplication: RedditPostsApplication

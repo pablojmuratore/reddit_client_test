@@ -5,8 +5,12 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import com.pablojmuratore.redditposts.RedditPostsApplication
+import javax.inject.Inject
 
 class NetworkHelper : INetworkHelper {
+    @Inject
+    constructor()
+
     override fun isNetworkAvailable(): Boolean {
         var result = false
         val connectivityManager = RedditPostsApplication.getContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

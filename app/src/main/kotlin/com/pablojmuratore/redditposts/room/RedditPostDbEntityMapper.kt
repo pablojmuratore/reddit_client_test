@@ -3,8 +3,11 @@ package com.pablojmuratore.redditposts.room
 import com.pablojmuratore.redditposts.model.RedditPost
 import com.pablojmuratore.redditposts.util.IEntityMapper
 import java.util.*
+import javax.inject.Inject
 
 class RedditPostDbEntityMapper : IEntityMapper<RedditPostDbEntity, RedditPost> {
+    @Inject
+    constructor()
     override fun mapFromEntity(entity: RedditPostDbEntity): RedditPost {
         return RedditPost(
             entity.id,

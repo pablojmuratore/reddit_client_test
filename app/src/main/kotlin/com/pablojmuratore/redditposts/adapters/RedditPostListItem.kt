@@ -70,7 +70,6 @@ class RedditPostListItem {
         }
 
         private fun buildPostedTime(templateString: String, created: Date): String {
-            val hourMilliseconds = 1000 * 60 * 60;
             val hours = ((System.currentTimeMillis() / 1000 - created.time) / 3600).toInt()
             return String.format(templateString, hours)
         }
