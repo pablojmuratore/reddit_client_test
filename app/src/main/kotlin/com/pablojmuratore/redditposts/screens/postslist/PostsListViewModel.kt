@@ -9,16 +9,20 @@ import androidx.paging.PagedList
 import com.pablojmuratore.redditposts.R
 import com.pablojmuratore.redditposts.RedditPostsApplication
 import com.pablojmuratore.redditposts.model.RedditPost
-import com.pablojmuratore.redditposts.network.RedditPostNetworkEntityMapper
 import com.pablojmuratore.redditposts.repositories.LocalDataRepository
 import com.pablojmuratore.redditposts.repositories.PostsRepository
 import com.pablojmuratore.redditposts.repositories.RemoteDataRepository
 import com.pablojmuratore.redditposts.room.AppDatabase
-import com.pablojmuratore.redditposts.room.RedditPostDbEntityMapper
 import com.pablojmuratore.redditposts.util.NetworkHelper
 import kotlinx.coroutines.launch
 
-class PostsListViewModel : ViewModel() {
+class PostsListViewModel(
+    private val database: AppDatabase,
+    private val remoteDataRepository: RemoteDataRepository,
+    private val localDataRepository: LocalDataRepository,
+    private val postsRepository: PostsRepository,
+    private val networkHelper: NetworkHelper
+) : ViewModel() {
     val postsList: LiveData<PagedList<RedditPost>>
 
     private var _refreshingPosts = MutableLiveData<Boolean>()
@@ -26,12 +30,6 @@ class PostsListViewModel : ViewModel() {
 
     private var _message = MutableLiveData<String>()
     val message: LiveData<String> get() = _message
-
-    private val database: AppDatabase by lazy { AppDatabase.getInstance() }
-    private val remoteDataRepository: RemoteDataRepository by lazy { RemoteDataRepository(RedditPostNetworkEntityMapper()) }
-    private val localDataRepository: LocalDataRepository by lazy { LocalDataRepository(database, RedditPostDbEntityMapper()) }
-    private val postsRepository: PostsRepository by lazy { PostsRepository(remoteDataRepository, localDataRepository) }
-    private val networkHelper = NetworkHelper()
 
     init {
         _message.value = ""
