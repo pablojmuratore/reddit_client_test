@@ -28,7 +28,10 @@ import com.pablojmuratore.redditposts.R
 import com.pablojmuratore.redditposts.databinding.FragmentPostImageBinding
 import com.pablojmuratore.redditposts.util.ImageDownloader
 import com.pablojmuratore.redditposts.util.NetworkHelper
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class PostImageFragment : Fragment() {
     private val PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE = 100
 
@@ -37,7 +40,8 @@ class PostImageFragment : Fragment() {
     private lateinit var binding: FragmentPostImageBinding
     private var imageUrl: String? = null
 
-    private val networkHelper = NetworkHelper()
+    @Inject
+    lateinit var networkHelper: NetworkHelper
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentPostImageBinding.inflate(inflater)
@@ -76,27 +80,38 @@ class PostImageFragment : Fragment() {
 
     private fun showImage(imageUrl: String?) {
         if (imageUrl != null) {
-            Glide.with(this)
-                .load(imageUrl)
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                        binding.saveImageButton.visibility = View.GONE
+            if (networkHelper.isNetworkAvailable()) {
+                Glide.with(this)
+                    .load(imageUrl)
+                    .listener(object : RequestListener<Drawable> {
+                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                            binding.saveImageButton.visibility = View.GONE
 
-                        Snackbar.make(binding.root, R.string.error_loading_image, Snackbar.LENGTH_SHORT).show()
+                            Snackbar.make(binding.root, R.string.error_loading_image, Snackbar.LENGTH_SHORT).show()
 
-                        Navigation.findNavController(binding.root).popBackStack()
+                            Navigation.findNavController(binding.root).popBackStack()
 
-                        return true
-                    }
+                            return true
+                        }
 
-                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                        binding.saveImageButton.visibility = View.VISIBLE
+                        override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                            binding.saveImageButton.visibility = View.VISIBLE
 
-                        return false
-                    }
+                            return false
+                        }
 
-                })
-                .into(binding.image)
+                    })
+                    .into(binding.image)
+            } else {
+                Snackbar.make(binding.root, R.string.no_network_message, Snackbar.LENGTH_SHORT).show()
+
+                Navigation.findNavController(binding.root).popBackStack()
+            }
+
+        } else {
+            Snackbar.make(binding.root, R.string.error_loading_image, Snackbar.LENGTH_SHORT).show()
+
+            Navigation.findNavController(binding.root).popBackStack()
         }
     }
 

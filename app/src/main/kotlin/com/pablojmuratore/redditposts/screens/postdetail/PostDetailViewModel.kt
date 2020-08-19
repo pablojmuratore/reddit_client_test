@@ -1,5 +1,6 @@
 package com.pablojmuratore.redditposts.screens.postdetail
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,13 +8,10 @@ import androidx.lifecycle.viewModelScope
 import com.pablojmuratore.redditposts.model.RedditPost
 import com.pablojmuratore.redditposts.repositories.LocalDataRepository
 import com.pablojmuratore.redditposts.repositories.PostsRepository
-import com.pablojmuratore.redditposts.repositories.RemoteDataRepository
-import com.pablojmuratore.redditposts.room.AppDatabase
 import kotlinx.coroutines.launch
 
-class PostDetailViewModel(
-    private val database: AppDatabase,
-    private val remoteDataRepository: RemoteDataRepository,
+class PostDetailViewModel
+@ViewModelInject constructor(
     private val localDataRepository: LocalDataRepository,
     private val postsRepository: PostsRepository
 ) : ViewModel() {

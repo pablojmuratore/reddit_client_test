@@ -9,33 +9,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.snackbar.Snackbar
 import com.pablojmuratore.redditposts.R
 import com.pablojmuratore.redditposts.databinding.FragmentPostDetailBinding
 import com.pablojmuratore.redditposts.model.RedditPost
-import com.pablojmuratore.redditposts.network.RedditPostNetworkEntityMapper
-import com.pablojmuratore.redditposts.repositories.LocalDataRepository
-import com.pablojmuratore.redditposts.repositories.PostsRepository
-import com.pablojmuratore.redditposts.repositories.RemoteDataRepository
-import com.pablojmuratore.redditposts.room.AppDatabase
-import com.pablojmuratore.redditposts.room.RedditPostDbEntityMapper
 import com.pablojmuratore.redditposts.util.GlideApp
-import com.pablojmuratore.redditposts.util.NetworkHelper
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PostDetailFragment : Fragment() {
     private lateinit var binding: FragmentPostDetailBinding
     private val args: PostDetailFragmentArgs? by navArgs()
-
-    private val database = AppDatabase.getInstance()
-    private val remoteDataRepository = RemoteDataRepository(RedditPostNetworkEntityMapper())
-    private val localDataRepository = LocalDataRepository(database, RedditPostDbEntityMapper())
-    private val postsRepository = PostsRepository(remoteDataRepository, localDataRepository)
-    private val networkHelper = NetworkHelper()
-
-    private val viewModel: PostDetailViewModel by viewModels {
-        PostDetailViewModelFactory(database, remoteDataRepository, localDataRepository, postsRepository)
-    }
-
+    private val viewModel: PostDetailViewModel by viewModels()
     private var redditPost: RedditPost? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -91,14 +75,10 @@ class PostDetailFragment : Fragment() {
 
     private fun initEvents() {
         binding.image.setOnClickListener {
-            if (networkHelper.isNetworkAvailable()) {
-                val post = viewModel.redditPost.value
+            val post = viewModel.redditPost.value
 
-                if (post != null) {
-                    showImageFragment(post.imageUrl)
-                }
-            } else {
-                Snackbar.make(binding.root, R.string.no_network_message, Snackbar.LENGTH_SHORT).show()
+            if (post != null) {
+                showImageFragment(post.imageUrl)
             }
         }
     }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -26,8 +27,7 @@ class PostsListFragment : Fragment() {
     private lateinit var binding: FragmentPostsListBinding
     lateinit var postsListAdapter: RedditPostsListAdapter
 
-    @Inject
-    lateinit var viewModel: PostsListViewModel
+    private val viewModel: PostsListViewModel by viewModels()
 
     private lateinit var postsEventsListener: RedditPostsListAdapter.IRedditPostEventsListener
 
