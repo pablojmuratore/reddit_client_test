@@ -10,7 +10,7 @@ class CustomListAnimator : DefaultItemAnimator() {
         if (holder is RedditPostListItem.RedditPostViewHolder && holder.dismissing) {
             holder.let {
                 val animation = AnimationUtils.loadAnimation(it.itemView.context, R.anim.list_item_remove_animation)
-                it.itemView?.animation = animation.also {
+                it.itemView.animation = animation.also {
                     dispatchAnimationsFinished()
                 }
             }

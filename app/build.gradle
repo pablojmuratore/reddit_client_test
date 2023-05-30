@@ -1,18 +1,21 @@
+plugins {
+    id 'com.google.devtools.ksp' version '1.8.21-1.0.11'
+    id 'com.google.dagger.hilt.android'
+}
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'dagger.hilt.android.plugin'
 
+
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "com.pablojmuratore.redditposts"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -30,32 +33,36 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     sourceSets {
         main.java.srcDir('src/main/kotlin/')
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_17
     }
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.pablojmuratore.redditposts'
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.1'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'com.google.android.material:material:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.3.0'
+    implementation 'com.google.android.material:material:1.9.0'
+
+//    def activity_version = "1.5.1"
+//    implementation "androidx.activity:activity-ktx:$activity_version"
 
     // retrofit
     def retrofit_version = "2.9.0"
@@ -63,43 +70,44 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 
     // moshi
-    def moshi_version = "1.9.3"
+    def moshi_version = '1.15.0'
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+    ksp "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
 
     // okhttp
-    def okhttp_logging_interceptor_version = "4.7.2"
+    def okhttp_logging_interceptor_version = "5.0.0-alpha.2"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_logging_interceptor_version"
 
     // glide
-    def glide_version = "4.11.0"
+    def glide_version = '4.15.1'
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
     implementation "com.github.bumptech.glide:okhttp3-integration:$glide_version"
 
     // architecture components
-    def lifecycle_version = "2.2.0"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+//    def lifecycle_version = "2.6.1"
+//    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+////    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+//    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
     // paging library
-    def paging_version = "2.1.2"
-    implementation "androidx.paging:paging-runtime:$paging_version"
+    def paging_version = '3.1.1'
+    //noinspection GradleDependency
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
     // multidex
     def multidex_version = "2.0.1"
     implementation "androidx.multidex:multidex:$multidex_version"
 
     // room
-    def room_version = "2.2.5"
+    def room_version = "2.5.1"
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
     // navigation component
-    def nav_version = "2.3.0"
+    def nav_version = "2.5.3"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
@@ -108,17 +116,27 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh_layout_version"
 
     // work manager
-    def work_manager_version = "2.5.0-alpha01"
+    def work_manager_version = "2.8.1"
     implementation "androidx.work:work-runtime:$work_manager_version"
 
     // hilt
-    def hilt_version = "2.28-alpha"
-    def hilt_lifecycle_viewmodel_version = "1.0.0-alpha02"
+//    def hilt_version = '2.46.1'
+//    def hilt_lifecycle_viewmodel_version = '1.0.0-alpha03'
+//    def hilt_navigation_compose_version = "1.0.0"
+//
+//    implementation "com.google.dagger:hilt-android:$hilt_version"
+////    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+//    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle_viewmodel_version"
+//    kapt "androidx.hilt:hilt-compiler:$hilt_lifecycle_viewmodel_version"
+//
+//    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+////    implementation "androidx.hilt:hilt-navigation-compose:$hilt_navigation_compose_version"
+
+    def hilt_version = "2.44"
     implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle_viewmodel_version"
-    kapt "androidx.hilt:hilt-compiler:$hilt_lifecycle_viewmodel_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
 }
+
 kapt {
     correctErrorTypes true
 }

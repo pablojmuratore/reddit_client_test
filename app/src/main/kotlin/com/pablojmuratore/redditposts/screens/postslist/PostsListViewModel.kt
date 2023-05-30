@@ -1,8 +1,10 @@
 package com.pablojmuratore.redditposts.screens.postslist
 
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.pablojmuratore.redditposts.R
@@ -13,16 +15,19 @@ import com.pablojmuratore.redditposts.repositories.PostsRepository
 import com.pablojmuratore.redditposts.repositories.RemoteDataRepository
 import com.pablojmuratore.redditposts.room.AppDatabase
 import com.pablojmuratore.redditposts.util.NetworkHelper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@HiltViewModel
 class PostsListViewModel
-@ViewModelInject constructor(
+@Inject constructor(
     private val database: AppDatabase,
     private val remoteDataRepository: RemoteDataRepository,
     private val localDataRepository: LocalDataRepository,
     private val postsRepository: PostsRepository,
     private val networkHelper: NetworkHelper,
-    @Assisted private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     val postsList: LiveData<PagedList<RedditPost>>
 

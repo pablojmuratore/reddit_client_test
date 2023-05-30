@@ -2,13 +2,10 @@ package com.pablojmuratore.redditposts.network
 
 import com.pablojmuratore.redditposts.model.RedditPost
 import com.pablojmuratore.redditposts.util.IEntityMapper
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 
-class RedditPostNetworkEntityMapper : IEntityMapper<RedditPostNetworkEntity, RedditPost> {
-    @Inject
-    constructor()
-
+class RedditPostNetworkEntityMapper @Inject constructor() : IEntityMapper<RedditPostNetworkEntity, RedditPost> {
     override fun mapFromEntity(entity: RedditPostNetworkEntity): RedditPost {
         return RedditPost(
             entity.data.id,
@@ -45,5 +42,4 @@ class RedditPostNetworkEntityMapper : IEntityMapper<RedditPostNetworkEntity, Red
     override fun mapToEntitiesList(models: List<RedditPost>): List<RedditPostNetworkEntity> {
         return models.map { mapToEntity(it) }
     }
-
 }

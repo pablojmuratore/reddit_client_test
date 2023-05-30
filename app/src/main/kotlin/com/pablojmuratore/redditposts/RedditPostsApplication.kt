@@ -18,6 +18,4 @@ class RedditPostsApplication : MultiDexApplication() {
 
         redditPostsApplication = this
     }
-
-
 }

@@ -7,13 +7,11 @@ import android.os.Build
 import com.pablojmuratore.redditposts.RedditPostsApplication
 import javax.inject.Inject
 
-class NetworkHelper : INetworkHelper {
-    @Inject
-    constructor()
-
+class NetworkHelper @Inject constructor() : INetworkHelper {
     override fun isNetworkAvailable(): Boolean {
         var result = false
         val connectivityManager = RedditPostsApplication.getContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val networkCapabilities = connectivityManager.activeNetwork ?: return false
             val actNw = connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
